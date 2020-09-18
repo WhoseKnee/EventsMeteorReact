@@ -7,13 +7,14 @@ import ListEvents from './ListEvents';
 class EventApp extends Component {
   render() {
     return (
-      <div>
-        <AddEvent />
+        <div>
+            <AddEvent />
         
-        {//<pre>DB Stuff: {JSON.stringify(this.props, null, ' ')} </pre>
-        }
-        <ListEvents {...this.props}/>
-      </div>
+            {//<pre>DB Stuff: {JSON.stringify(this.props, null, ' ')} </pre>
+            }
+            <ListEvents/>
+            
+        </div>
     );
   }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import Events collection
-import { Events } from "../api/events";
-
+import { Meteor } from 'meteor/meteor';
+//import {addEvent} from'/server/main.js';
 class AddEvent extends Component {
   constructor(props) {
     super(props);
@@ -16,6 +15,7 @@ class AddEvent extends Component {
     const field = event.target.name;
 
     // we use square braces around the key `field` coz its a variable (we are setting state with a dynamic key name)
+    // for example: set title to whatever that has been changed
     this.setState({
       [field]: event.target.value
     })
@@ -25,24 +25,24 @@ class AddEvent extends Component {
     // prevents page from refreshing onSubmit
     event.preventDefault();
 
-    const { title, description, date } = this.state;
-
+    const oneEvent  = { title : this.state.title, 
+                      description : this.state.description, 
+                      date : this.state.date
+                    };
+    
     // TODO: Create backend Meteor methods to save created events
     // alert("Will be Saved in a little bit :)")
 
     // add method `insert` to db
-    Events.insert({
-      title,
-      description,
-      date
-    });
-
-    // clears input fields onSubmit
-    this.setState({
-      title: "",
-      description: "",
-      date: ""
+    Meteor.call('addEvent',oneEvent ,()=>{
+        // clears input fields onSubmit
+      this.setState({
+        title: "",
+        description: "",
+        date: ""
+      });
     })
+    
   }
 
   render() {
@@ -53,7 +53,7 @@ class AddEvent extends Component {
         </div>
         <hr />
 
-        <div className="jumbotron" style={{ margin: "0 500px" }}>
+        <div className="jumbotron" style={{ margin: "0em 25%" }}>
           <form onSubmit={this.handleSubmit}>
 
             <div className="form-group">
