@@ -13,7 +13,7 @@ class DeleteEvent extends Component {
             date: "",
             event_id: ""
         }
-        this.isIdCheck = this.isIdCheck.bind(this);
+        this.isIdCheckDelete = this.isIdCheckDelete.bind(this);
     }
 
     handleChange = (event) => {
@@ -29,12 +29,15 @@ class DeleteEvent extends Component {
         // prevents page from refreshing onSubmit
         event.preventDefault();
     
-        const { title, description, date } = this.state;
+        const oneEvent = { title : this.state.title, 
+            description : this.state.description, 
+            date : this.state.date
+          };
         const selectedId = this.props.id;
         // TODO: Create backend Meteor methods to save created events
         // alert("Will be Saved in a little bit :)")
     
-        Meteor.call('deleteEvent',selectedId, event,() => {
+        Meteor.call('deleteEvent',selectedId, oneEvent,() => {
             this.props.onHide(); 
          });
     }
@@ -47,17 +50,18 @@ class DeleteEvent extends Component {
         }
     }
 
-    isIdCheck() {
+    isIdCheckDelete() {
+        console.log("isIdCheck entered.");
         var allEvents = this.props.eventRetrieved;
-        console.log(allEvents);
+        console.log( allEvents);
         Object.values(allEvents).forEach(val => this.compareId(val));
         console.log(this.state);
     }
 
     componentDidUpdate(prevProps, prevStates){
         if(prevProps.id !== this.props.id){
-            this.isIdCheck();
-            console.log("isTitleCheck activated.");
+            this.isIdCheckDelete();
+            console.log("isTitleId for DeleteEvent activated.");
         }
         if(prevStates.events !== this.state.events){
             console.log("events updated.");

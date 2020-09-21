@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { addEvent } from '../api/events/methods.js';
 //import {addEvent} from'/server/main.js';
 class AddEvent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      description: "",
-      date: ""
+        title: "",
+        description: "",
+        date: ""
     }
+    this.addEvent = addEvent;
   }
 
   handleChange = (event) => {
@@ -27,21 +29,35 @@ class AddEvent extends Component {
 
     const oneEvent  = { title : this.state.title, 
                       description : this.state.description, 
-                      date : this.state.date
+                      date : this.state.date,
+                      isDeleted : false
                     };
     
     // TODO: Create backend Meteor methods to save created events
     // alert("Will be Saved in a little bit :)")
 
-    // add method `insert` to db
-    Meteor.call('addEvent',oneEvent ,()=>{
-        // clears input fields onSubmit
-      this.setState({
-        title: "",
-        description: "",
-        date: ""
-      });
-    })
+    // // add method `insert` to db
+    // Meteor.call('addEvent',oneEvent ,()=>{
+    //     // clears input fields onSubmit
+    //   this.setState({
+    //     title: "",
+    //     description: "",
+    //     date: ""
+    //   });
+    // })
+
+    console.log(oneEvent);
+
+    addEvent.call(oneEvent 
+      // ,()=>{
+      //     // clears input fields onSubmit
+      //   this.setState({
+      //     title: "",
+      //     description: "",
+      //     date: ""
+      //   });
+    //}
+    );
     
   }
 

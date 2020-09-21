@@ -47,8 +47,8 @@ class ListEvents extends Component {
                     <Button variant="primary" name="edit" value={event._id} onClick={this.parseData} >
                         Edit
                     </Button>
-                    <Button variant="Danger" name="delete" value={event._id} onClick={this.parseData} >
-                        Edit
+                    <Button variant="d  anger" name="delete" value={event._id} onClick={this.parseData} >
+                        Delete
                     </Button>
                 </div>
             </div>
@@ -75,7 +75,7 @@ class ListEvents extends Component {
 export default withTracker(() => {
     const subEvent = Meteor.subscribe("existingEvent");
     const subReady  = subEvent.ready();
-    const eventsArr = Events.find({}).fetch();
+    const eventsArr = Events.find({isDeleted : false}).fetch();
     return{
         subReady: subReady,
         events: eventsArr

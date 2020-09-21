@@ -30,7 +30,7 @@ class EditEvent extends Component {
         // prevents page from refreshing onSubmit
         event.preventDefault();
     
-        const oneEvent = { titles : this.state.title, 
+        const oneEvent = { title : this.state.title, 
             description : this.state.description, 
             date : this.state.date
           };

@@ -35,7 +35,7 @@ Meteor.publish("events", function(){
 });
 
 Meteor.publish("existingEvent", function() {
-  return Events.find({isDeleted : false});
+  return Events.find({isDeleted : true});
 });
 
 Meteor.methods({  
@@ -43,7 +43,8 @@ Meteor.methods({
     Events.insert({
       title : event.title,
       description : event.description,
-      date : event.date
+      date : event.date,
+      isDeleted: false
     });
   }, 
   updateEvent(selectedId,event){
@@ -51,12 +52,13 @@ Meteor.methods({
       $set: {
           title: event.title,
           description: event.description,
-          date: event.date
+          date: event.date,
+          isDeleted: false
       }
   })
   },
   deleteEvent(selectedId,event){
-    Events.update({_id: selectedId},{
+    Events.upsert({_id: selectedId},{
       $set: {
           title: event.title,
           description: event.description,
